@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Controllers\Frontend;
+
+use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+
+class HomeController extends Controller
+{
+
+    // === Home
+    public function home(Request $request)
+    { 
+        return view('frontend.index');
+    }
+
+
+    public function log_waste_disposal(Request $request)
+    { 
+        return view('frontend.log_waste_disposal');
+    }
+   
+
+
+
+}
