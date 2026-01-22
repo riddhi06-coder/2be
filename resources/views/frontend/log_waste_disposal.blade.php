@@ -17,6 +17,8 @@
 
 </head>
 
+    @include('components.frontend.header')
+
     <section class="log-btn-wrap">
       <div class="container">
         <div class="row">
