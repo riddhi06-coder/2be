@@ -30,4 +30,11 @@ class DisposalController extends Controller
     { 
         return view('backend.disposal.create');
     }
+
+    public function edit($id)
+    {
+        $disposal = WasteDisposalDetails::findOrFail($id);
+        return view('backend.disposal.edit', compact('disposal'));
+    }
+
 }

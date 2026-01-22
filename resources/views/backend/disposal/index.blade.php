@@ -38,20 +38,19 @@
                   <div class="card-body">
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
-								<nav aria-label="breadcrumb" role="navigation">
-									<ol class="breadcrumb mb-0">
-										<li class="breadcrumb-item">
-											<a href="{{ route('manage-disposal-details.index') }}">Home</a>
-										</li>
-										<li class="breadcrumb-item active" aria-current="page">Disposal Details</li>
-									</ol>
-								</nav>
-
-								<!-- <a href="{{ route('manage-disposal-details.create') }}" class="btn btn-primary px-5 radius-30">+ Add Details</a> -->
-							</div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('manage-disposal-details.index') }}">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Disposal Details</li>
+                            </ol>
+                        </nav>
+                    </div>
 
 
                     <div class="table-responsive custom-scrollbar">
+
                         <table class="display" id="basic-1">
                             <thead>
                                 <tr>
@@ -61,7 +60,7 @@
                                     <th>Generator Name</th>
                                     <th>Waste Type</th>
                                     <th>Volume Pumped</th>
-                                    <th>Discharge Site</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,7 +71,9 @@
                                         <td>{{ $disposal->generator_name }}</td>
                                         <td>{{ $disposal->waste_type }}</td>
                                         <td>{{ $disposal->volume_pumped }}</td>
-                                        <td>{{ $disposal->discharge_site }}</td>
+                                        <td>
+                                            <a href="{{ route('manage-disposal-details.edit', $disposal->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
