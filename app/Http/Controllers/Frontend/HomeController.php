@@ -24,13 +24,11 @@ class HomeController extends Controller
         return view('frontend.index');
     }
 
-
     // === Thankyouuu
     public function thank_you(Request $request)
     { 
         return view('frontend.thank_you');
     }
-
 
     // === Log Waste Disposal
     public function log_waste_disposal(Request $request)

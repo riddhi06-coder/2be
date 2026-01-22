@@ -20,163 +20,163 @@
     @include('components.frontend.header')
 
     <section class="log-btn-wrap">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-2 col-sm-0"></div>
-          <div class="col-md-8 col-sm-12">
-            <div class="form-box">
-              <h2>Log Waste Disposal Details</h2>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2 col-sm-0"></div>
+            <div class="col-md-8 col-sm-12">
+              <div class="form-box">
+                <h2>Log Waste Disposal Details</h2>
 
-              <form action="{{ route('waste.store') }}" method="POST">
-                  @csrf
-                <div class="row">
+                <form action="{{ route('waste.store') }}" method="POST">
+                    @csrf
+                  <div class="row">
 
-                  <!-- Date of Pickup -->
-                  <div class="form-group col-md-4">
-                    <label>Date of Pickup/Pumping <span class="text-danger">*</span></label>
-                    <div class="input-group">
-                      <input type="text"
-                            name="date_of_pickup"
-                            id="date_of_pickup"
-                            class="form-control"
-                            placeholder="MM/DD/YYYY"
-                            >
-                      <span class="input-group-text custom-icon" id="calendar-icon-pickup">
-                        <i class="fa-solid fa-calendar-days"></i>
-                      </span>
+                    <!-- Date of Pickup -->
+                    <div class="form-group col-md-4">
+                      <label>Date of Pickup/Pumping <span class="text-danger">*</span></label>
+                      <div class="input-group">
+                        <input type="text"
+                              name="date_of_pickup"
+                              id="date_of_pickup"
+                              class="form-control"
+                              placeholder="MM/DD/YYYY"
+                              >
+                        <span class="input-group-text custom-icon" id="calendar-icon-pickup">
+                          <i class="fa-solid fa-calendar-days"></i>
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  <!-- Generator Name -->
-                  <div class="form-group col-md-4">
-                    <label>Facility/Owner Name <span class="text-danger">*</span> </label>
-                    <input type="text"
-                          class="form-control"
-                          name="generator_name"
-                          id="generator_name"
-                          placeholder="Enter Facility/Owner name"
-                          >
-                  </div>
-
-                  <!-- Waste Type -->
-                  <div class="form-group col-md-4">
-                    <label>Waste Type <span class="text-danger">*</span> </label>
-                    <input type="text"
-                          class="form-control"
-                          name="waste_type"
-                          id="waste_type"
-                          placeholder="e.g. Septage, Grease"
-                          >
-                  </div>
-
-                  <!-- Generator Address -->
-                  <div class="form-group col-md-6">
-                    <label>Address <span class="text-danger">*</span> </label>
-                    <textarea class="form-control"
-                              name="address"
-                              id="generator_address"
-                              placeholder="Street, City, State, ZIP"
-                              ></textarea>
-                  </div>
-
-                  <!-- Volume Pumped -->
-                  <div class="form-group col-md-6">
-                    <label>Volume Pumped <span class="text-danger">*</span> </label>
-                    <input type="number"
-                          class="form-control"
-                          name="volume_pumped"
-                          id="volume_pumped"
-                          placeholder="Enter volume (gallons)"
-                          >
-                  </div>
-
-
-                  <div class="form-group col-md-6">
-                    <label>Unit <span class="text-danger">*</span>  </label>
-                    <input type="text"
-                        class="form-control"
-                        name="unit"
-                        id="unit"
-                        placeholder="Unit (e.g. A-12 / 3B)">
-
-                  </div>
-
-
-
-                  <div class="form-group col-md-6">
-                    <label>Zip <span class="text-danger">*</span> </label>
-                    <input type="text"
-                        class="form-control"
-                        name="zip"
-                        id="zip"
-                        maxlength="10"
-                        placeholder="ZIP Code"
-                        oninput="this.value = this.value.replace(/[^0-9\-]/g,'')">
-
-                  </div>
-
-                  <!-- Date of Discharge -->
-                  <div class="form-group col-md-6">
-                    <label>Date of Discharge <span class="text-danger">*</span> </label>
-                    <div class="input-group">
+                    <!-- Generator Name -->
+                    <div class="form-group col-md-4">
+                      <label>Facility/Owner Name <span class="text-danger">*</span> </label>
                       <input type="text"
-                            id="date_of_discharge"
-                            name="date_of_discharge"
                             class="form-control"
-                            placeholder="MM/DD/YYYY"
+                            name="generator_name"
+                            id="generator_name"
+                            placeholder="Enter Facility/Owner name"
                             >
-                      <span class="input-group-text custom-icon" id="calendar-icon-discharge">
-                        <i class="fa-solid fa-calendar-days"></i>
-                      </span>
                     </div>
-                  </div>
 
-                  <!-- Discharge Site -->
-                  <div class="form-group col-md-6">
-                    <label>Discharge Site <span class="text-danger">*</span> </label>
-                    <select class="form-select"
-                            name="discharge_site"
-                            id="discharge_site"
+                    <!-- Waste Type -->
+                    <div class="form-group col-md-4">
+                      <label>Waste Type <span class="text-danger">*</span> </label>
+                      <input type="text"
+                            class="form-control"
+                            name="waste_type"
+                            id="waste_type"
+                            placeholder="e.g. Septage, Grease"
                             >
-                      <option value="" disabled selected>Select discharge site</option>
-                      <option value="Hilo">Hilo</option>
-                      <option value="Kona">Kona</option>
-                    </select>
-                  </div>
+                    </div>
 
-                  <!-- Transporter Name -->
-                  <div class="form-group col-md-6">
-                    <label>Driver’s Initials <span class="text-danger">*</span> </label>
-                    <input type="text"
+                    <!-- Generator Address -->
+                    <div class="form-group col-md-6">
+                      <label>Address <span class="text-danger">*</span> </label>
+                      <textarea class="form-control"
+                                name="address"
+                                id="generator_address"
+                                placeholder="Street, City, State, ZIP"
+                                ></textarea>
+                    </div>
+
+                    <!-- Volume Pumped -->
+                    <div class="form-group col-md-6">
+                      <label>Volume Pumped <span class="text-danger">*</span> </label>
+                      <input type="number"
+                            class="form-control"
+                            name="volume_pumped"
+                            id="volume_pumped"
+                            placeholder="Enter volume (gallons)"
+                            >
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                      <label>Unit <span class="text-danger">*</span>  </label>
+                      <input type="text"
                           class="form-control"
-                          name="transporter_name"
-                          id="transporter_name"
-                          placeholder="Enter Driver’s Initials"
-                          >
-                  </div>
+                          name="unit"
+                          id="unit"
+                          placeholder="Unit (e.g. A-12 / 3B)">
 
-                  <!-- Transporter Registration Number -->
-                  <div class="form-group col-md-6">
-                    <label>Vehicle License Number <span class="text-danger">*</span> </label>
-                    <input type="text"
+                    </div>
+
+
+
+                    <div class="form-group col-md-6">
+                      <label>Zip <span class="text-danger">*</span> </label>
+                      <input type="text"
                           class="form-control"
-                          name="vehicle_license_number"
-                          id="vehicle_license_number"
-                          placeholder="License number"
-                          >
+                          name="zip"
+                          id="zip"
+                          maxlength="10"
+                          placeholder="ZIP Code"
+                          oninput="this.value = this.value.replace(/[^0-9\-]/g,'')">
+
+                    </div>
+
+                    <!-- Date of Discharge -->
+                    <div class="form-group col-md-6">
+                      <label>Date of Discharge <span class="text-danger">*</span> </label>
+                      <div class="input-group">
+                        <input type="text"
+                              id="date_of_discharge"
+                              name="date_of_discharge"
+                              class="form-control"
+                              placeholder="MM/DD/YYYY"
+                              >
+                        <span class="input-group-text custom-icon" id="calendar-icon-discharge">
+                          <i class="fa-solid fa-calendar-days"></i>
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- Discharge Site -->
+                    <div class="form-group col-md-6">
+                      <label>Discharge Site <span class="text-danger">*</span> </label>
+                      <select class="form-select"
+                              name="discharge_site"
+                              id="discharge_site"
+                              >
+                        <option value="" disabled selected>Select discharge site</option>
+                        <option value="Hilo">Hilo</option>
+                        <option value="Kona">Kona</option>
+                      </select>
+                    </div>
+
+                    <!-- Transporter Name -->
+                    <div class="form-group col-md-6">
+                      <label>Driver’s Initials <span class="text-danger">*</span> </label>
+                      <input type="text"
+                            class="form-control"
+                            name="transporter_name"
+                            id="transporter_name"
+                            placeholder="Enter Driver’s Initials"
+                            >
+                    </div>
+
+                    <!-- Transporter Registration Number -->
+                    <div class="form-group col-md-6">
+                      <label>Vehicle License Number <span class="text-danger">*</span> </label>
+                      <input type="text"
+                            class="form-control"
+                            name="vehicle_license_number"
+                            id="vehicle_license_number"
+                            placeholder="License number"
+                            >
+                    </div>
+
                   </div>
 
-                </div>
+                  <div class="btn-center text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
 
-                <div class="btn-center text-center">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
-
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </section>
 
 
