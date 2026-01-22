@@ -39,6 +39,7 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Home
     Route::get('/', [HomeController::class, 'home'])->name('frontend.index');
     Route::get('/log-waste-disposal', [HomeController::class, 'log_waste_disposal'])->name('frontend.log_waste_disposal');
+    Route::get('/thank-you', [HomeController::class, 'thank_you'])->name('frontend.thank_you');
     Route::post('/waste-entry', [HomeController::class, 'store_waste_entry'])->name('waste.store');
 
 });

@@ -17,16 +17,6 @@
 
 </head>
 
-
-    <section class="header-wrap">
-      <div class="container-fluid text-center">
-        <div class="header-img-box">
-          <img src="{{ asset('frontend/assets/images/logo.webp') }}" class="img-responsive">
-          <h1>2BE Pumping Log</h1>
-        </div>
-      </div>
-    </section>
-
     <section class="log-btn-wrap">
       <div class="container">
         <div class="row">
@@ -35,7 +25,8 @@
             <div class="form-box">
               <h2>Log Waste Disposal Details</h2>
 
-              <form action="#">
+              <form action="{{ route('waste.store') }}" method="POST">
+                  @csrf
                 <div class="row">
 
                   <!-- Date of Pickup -->
@@ -43,6 +34,7 @@
                     <label>Date of Pickup/Pumping <span class="text-danger">*</span></label>
                     <div class="input-group">
                       <input type="text"
+                            name="date_of_pickup"
                             id="date_of_pickup"
                             class="form-control"
                             placeholder="MM/DD/YYYY"
@@ -101,7 +93,7 @@
                     <label>Unit <span class="text-danger">*</span>  </label>
                     <input type="text"
                         class="form-control"
-                        name="Unit"
+                        name="unit"
                         id="unit"
                         placeholder="Unit (e.g. A-12 / 3B)">
 
@@ -127,6 +119,7 @@
                     <div class="input-group">
                       <input type="text"
                             id="date_of_discharge"
+                            name="date_of_discharge"
                             class="form-control"
                             placeholder="MM/DD/YYYY"
                             >
@@ -165,8 +158,8 @@
                     <label>Vehicle License Number <span class="text-danger">*</span> </label>
                     <input type="text"
                           class="form-control"
-                          name="Vehicle License Number"
-                          id="transporter_registration_number"
+                          name="vehicle_license_number"
+                          id="vehicle_license_number"
                           placeholder="License number"
                           >
                   </div>
@@ -219,130 +212,135 @@
 
       <!---- for js validations---->
       <script>
-        document.querySelector('form').addEventListener('submit', function (e) {
-            e.preventDefault();
+        document.addEventListener('DOMContentLoaded', function () {
 
-            let isValid = true;
+            const form = document.querySelector('form');
+            if (!form) return;
 
-            // Remove old errors
-            document.querySelectorAll('.error-text').forEach(el => el.remove());
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
 
-            // Helpers
-            const showError = (element, message) => {
-                const error = document.createElement('div');
-                error.className = 'error-text';
-                error.innerText = message;
-                element.closest('.form-group').appendChild(error);
-                isValid = false;
-            };
+                let isValid = true;
 
-            const today = new Date();
-            today.setHours(0,0,0,0);
+                // Remove old errors
+                document.querySelectorAll('.error-text').forEach(el => el.remove());
 
-            const lettersOnly = /^[A-Za-z\s]+$/;
-            const initialsPattern = /^[A-Z]{2,3}$/;
-            const usLicensePattern = /^[A-Z0-9]{5,8}$/;
-            const unitPattern = /^[A-Za-z0-9\s\-\/]+$/;
-            const usZipPattern = /^\d{5}(-\d{4})?$/;
+                const showError = (element, message) => {
+                    const error = document.createElement('div');
+                    error.className = 'error-text';
+                    error.innerText = message;
+                    element.closest('.form-group').appendChild(error);
+                    isValid = false;
+                };
 
+                const today = new Date();
+                today.setHours(0,0,0,0);
 
-            // Date of Pickup
-            const pickupInput = document.getElementById('date_of_pickup');
-            const pickupDate = new Date(pickupInput.value);
-            if (!pickupInput.value) {
-                showError(pickupInput, "Date of Pickup is required.");
-            } else if (pickupDate > today) {
-                showError(pickupInput, "Date of Pickup cannot be in the future.");
-            }
+                const lettersOnly = /^[A-Za-z\s]+$/;
+                const initialsPattern = /^[A-Z]{2,3}$/;
+                const usLicensePattern = /^[A-Z0-9]{5,8}$/;
+                const unitPattern = /^[A-Za-z0-9\s\-\/]+$/;
+                const hawaiiZipPattern = /^(967\d{2}|968\d{2})(-\d{4})?$/;
 
-            // Facility / Owner Name
-            const generatorName = document.getElementById('generator_name');
-            if (!generatorName.value.trim()) {
-                showError(generatorName, "Facility/Owner Name is required.");
-            } else if (!lettersOnly.test(generatorName.value.trim())) {
-                showError(generatorName, "Only letters and spaces allowed.");
-            }
+                // Date of Pickup
+                const pickupInput = document.getElementById('date_of_pickup');
+                if (pickupInput) {
+                    const pickupDate = new Date(pickupInput.value);
+                    if (!pickupInput.value) {
+                        showError(pickupInput, "Date of Pickup is required.");
+                    } else if (pickupDate > today) {
+                        showError(pickupInput, "Date of Pickup cannot be in the future.");
+                    }
+                }
 
-            // Waste Type
-            const wasteType = document.getElementById('waste_type');
-            if (!wasteType.value.trim()) {
-                showError(wasteType, "Waste Type is required.");
-            } else if (!lettersOnly.test(wasteType.value.trim())) {
-                showError(wasteType, "Only letters and spaces allowed.");
-            }
+                // Facility Name
+                const generatorName = document.getElementById('generator_name');
+                if (generatorName && !generatorName.value.trim()) {
+                    showError(generatorName, "Facility/Owner Name is required.");
+                }
 
-            // Address
-            const address = document.getElementById('generator_address');
-            if (!address.value.trim()) {
-                showError(address, "Address is required.");
-            }
+                // Waste Type
+                const wasteType = document.getElementById('waste_type');
+                if (wasteType && !wasteType.value.trim()) {
+                    showError(wasteType, "Waste Type is required.");
+                }
 
-            // Volume Pumped
-            const volume = document.getElementById('volume_pumped');
-            if (!volume.value) {
-                showError(volume, "Volume Pumped is required.");
-            } else if (isNaN(volume.value) || Number(volume.value) < 0) {
-                showError(volume, "Must be a non-negative number.");
-            }
+                // Address
+                const address = document.getElementById('generator_address');
+                if (address && !address.value.trim()) {
+                    showError(address, "Address is required.");
+                }
 
-            // Date of Discharge
-            const dischargeInput = document.getElementById('date_of_discharge');
-            const dischargeDate = new Date(dischargeInput.value);
-            if (!dischargeInput.value) {
-                showError(dischargeInput, "Date of Discharge is required.");
-            } else if (dischargeDate > today) {
-                showError(dischargeInput, "Date of Discharge cannot be in the future.");
-            }
+                // Volume
+                const volume = document.getElementById('volume_pumped');
+                if (volume && (!volume.value || Number(volume.value) < 0)) {
+                    showError(volume, "Volume must be a non-negative number.");
+                }
 
-            // Discharge Site
-            const dischargeSite = document.getElementById('discharge_site');
-            if (!dischargeSite.value) {
-                showError(dischargeSite, "Please select a discharge site.");
-            }
+                // Date of Discharge
+                const dischargeInput = document.getElementById('date_of_discharge');
+                if (dischargeInput) {
+                    const dischargeDate = new Date(dischargeInput.value);
+                    if (!dischargeInput.value) {
+                        showError(dischargeInput, "Date of Discharge is required.");
+                    } else if (dischargeDate > today) {
+                        showError(dischargeInput, "Date of Discharge cannot be in the future.");
+                    }
+                }
 
-            // Driver’s Initials
-            const driverInitials = document.getElementById('transporter_name');
-            driverInitials.value = driverInitials.value.toUpperCase();
-            if (!driverInitials.value.trim()) {
-                showError(driverInitials, "Driver’s Initials are required.");
-            } else if (!initialsPattern.test(driverInitials.value)) {
-                showError(driverInitials, "Use 2–3 uppercase letters only.");
-            }
+                // Discharge Site
+                const dischargeSite = document.getElementById('discharge_site');
+                if (dischargeSite && !dischargeSite.value) {
+                    showError(dischargeSite, "Please select a discharge site.");
+                }
 
-            // Vehicle License Number
-            const license = document.getElementById('transporter_registration_number');
-            license.value = license.value.toUpperCase();
-            if (!license.value.trim()) {
-                showError(license, "Vehicle License Number is required.");
-            } else if (!usLicensePattern.test(license.value)) {
-                showError(license, "Invalid US license number format.");
-            }
+                // Driver Initials
+                const driverInitials = document.getElementById('transporter_name');
+                if (driverInitials) {
+                    driverInitials.value = driverInitials.value.toUpperCase();
+                    if (!driverInitials.value.trim()) {
+                        showError(driverInitials, "Driver’s Initials are required.");
+                    } else if (!initialsPattern.test(driverInitials.value)) {
+                        showError(driverInitials, "Use 2–3 uppercase letters only.");
+                    }
+                }
 
+                // 🔴 Error 2 FIX (see below)
+                const license = document.getElementById('vehicle_license_number');
+                if (license) {
+                    license.value = license.value.toUpperCase();
+                    if (!license.value.trim()) {
+                        showError(license, "Vehicle License Number is required.");
+                    } else if (!usLicensePattern.test(license.value)) {
+                        showError(license, "Invalid US license number format.");
+                    }
+                }
 
-            // Unit
-            const unit = document.getElementById('unit');
-            if (!unit.value.trim()) {
-                showError(unit, "Unit is required.");
-            } else if (!unitPattern.test(unit.value.trim())) {
-                showError(unit, "Unit can contain letters, numbers, - or / only.");
-            }
+                // Unit
+                const unit = document.getElementById('unit');
+                if (unit && !unit.value.trim()) {
+                    showError(unit, "Unit is required.");
+                }
 
-            // ZIP Code
-            const zip = document.getElementById('zip');
-            if (!zip.value.trim()) {
-                showError(zip, "ZIP code is required.");
-            } else if (!usZipPattern.test(zip.value.trim())) {
-                showError(zip, "Enter a valid US ZIP (12345 or 12345-6789).");
-            }
+                // ZIP
+                const zip = document.getElementById('zip');
+                if (zip) {
+                    zip.value = zip.value.trim();
+                    if (!zip.value) {
+                        showError(zip, "ZIP code is required.");
+                    } else if (!hawaiiZipPattern.test(zip.value)) {
+                        showError(zip, "Enter a valid Hawaii ZIP code.");
+                    }
+                }
 
+                if (isValid) {
+                    form.submit();
+                }
+            });
 
-
-            // Submit if valid
-            if (isValid) {
-                this.submit();
-            }
         });
       </script>
+
 
 
 
