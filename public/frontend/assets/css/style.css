@@ -247,7 +247,7 @@ textarea.form-control {
 
 
 .success-wrap {
-    min-height: calc(92vh - 92px); /* adjust 120px to match header+footer height */
+    min-height: calc(92vh - 92px); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -298,7 +298,6 @@ textarea.form-control {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 15px;
-    color: #1a73e8;
 }
 
 .success-card p {
@@ -307,18 +306,3 @@ textarea.form-control {
     margin-bottom: 30px;
 }
 
-.btn-primary {
-    padding: 12px 30px;
-    border-radius: 8px;
-    font-weight: 600;
-    background: linear-gradient(90deg, #1a73e8, #4dabff);
-    border: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
-}
-
-.btn-primary:hover {
-    background: linear-gradient(90deg, #4dabff, #1a73e8);
-    box-shadow: 0 8px 20px rgba(26, 115, 232, 0.4);
-    transform: translateY(-2px);
-}
