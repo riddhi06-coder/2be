@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
-
+use App\Http\Controllers\Backend\DisposalController;
 
 use App\Http\Controllers\Frontend\HomeController;
 
@@ -28,7 +28,8 @@ Route::group(['middleware' => ['auth:web', \App\Http\Middleware\PreventBackHisto
 });
 
 
-
+// ==== Manage Disposal Details
+Route::resource('manage-disposal-details', DisposalController::class);
 
 
 

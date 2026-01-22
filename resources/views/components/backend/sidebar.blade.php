@@ -1,7 +1,7 @@
 <!-- Page Body Start-->
  <div class="page-body-wrapper">
         <!-- Page Sidebar Start-->
-        <div class="sidebar-wrapper" data-layout="stroke-svg" style="width:15%;">
+        <div class="sidebar-wrapper" data-layout="stroke-svg" style="width:17%;">
           <div class="logo-wrapper"><a href="{{ route('admin.dashboard') }}"><img class="img-fluid" src="{{ asset('admin/assets/images/logo/logo.webp') }}" alt="" style="max-width: 50% !important; margin-left:40px;"></a>
 		  	<a href="{{ route('admin.dashboard') }}">
 				<!-- <img class="img-fluid" src="{{ asset('admin/assets/images/logo/logo-icon.png') }}" alt="" style="max-width: 65% !important;"> -->
@@ -28,6 +28,20 @@
                       <use href="{{ asset('admin/assets/svg/icon-sprite.svg#fill-home') }}"></use>
                     </svg>
                     <span class="lan-3">Dashboard</span>
+                  </a>
+                </li>
+
+
+                 <li class="sidebar-list {{ request()->routeIs('manage-disposal-details.index') ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"></i>
+                  <a class="sidebar-link" href="{{ route('manage-disposal-details.index') }}">
+                    <svg class="stroke-icon"> 
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#return-box') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#return-box') }}"></use>
+                    </svg>
+                    <span>Disposal Details</span>
                   </a>
                 </li>
 
