@@ -48,7 +48,7 @@
                             <div class="tab-content" id="wizard-tabContent">
                                 <div class="tab-pane fade show active" id="wizard-contact" role="tabpanel" aria-labelledby="wizard-contact-tab">
 
-                                  <form class="needs-validation custom-input" novalidate method="POST" enctype="multipart/form-data">
+                                    <form class="needs-validation custom-input" novalidate method="POST" enctype="multipart/form-data">
 
                                         <div class="row g-3">
                                             <!-- Created Date -->
