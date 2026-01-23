@@ -37,38 +37,52 @@
                 <div class="card">
                   <div class="card-body">
 
-                    <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+
+                        <!-- Breadcrumb -->
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
                                     <a href="{{ route('manage-disposal-details.index') }}">Home</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Disposal Details</li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Disposal Details
+                                </li>
                             </ol>
                         </nav>
 
+                        <!-- Year Filter Card (Right Side) -->
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body d-flex align-items-center gap-2 py-2 px-3">
 
-                        <!-- Year Filter -->
-                        <form method="GET" action="{{ route('manage-disposal-details.index') }}">
-                            <select name="year"
-                                    class="form-select"
-                                    style="width: 160px;"
-                                    onchange="this.form.submit()">
-                                <option value="">All Years</option>
-                                @foreach($years as $year)
-                                    <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
-                                        {{ $year }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </form>
-                        
+                                <span class="fw-semibold text-muted small">
+                                    Filter by Year
+                                </span>
+
+                                <form method="GET" action="{{ route('manage-disposal-details.index') }}">
+                                    <select name="year"
+                                            class="form-select form-select-sm"
+                                            style="width: 140px;"
+                                            onchange="this.form.submit()">
+                                        <option value="">All Years</option>
+                                        @foreach($years as $year)
+                                            <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
+                                                {{ $year }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </form>
+
+                            </div>
+                        </div>
+
                     </div>
 
 
                     <div class="table-responsive custom-scrollbar">
-
+                    
                         <table class="display" id="basic-1">
+                        
                             <thead>
                                 <tr>
                                     <th>#</th>

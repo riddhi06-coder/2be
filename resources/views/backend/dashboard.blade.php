@@ -155,9 +155,13 @@
                                   ♻ Log a Waste Disposal
                               </a>
 
-                              <a href="#" class="btn action-btn report-btn">
+                              <a href="#"
+                                class="btn action-btn report-btn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#monthlyReportModal">
                                   📊 Generate Monthly Report
                               </a>
+
                           </div>
                       </div>
                   </div>
@@ -171,6 +175,119 @@
         @include('components.backend.footer')
       </div>
       
+    </div>
+
+
+    <div class="modal fade" id="monthlyReportModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content border-0 shadow-lg">
+
+              <!-- Modal Header -->
+              <div class="modal-header bg-light">
+                  <h5 class="modal-title fw-bold">
+                      Generate Monthly Source Report
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+
+              <!-- Modal Body -->
+              <form method="POST" action="#">
+                  @csrf
+
+                  <div class="modal-body">
+                      <div class="row g-3">
+
+                          <!-- Month -->
+                          <div class="col-md-6">
+                              <label class="form-label">Month</label>
+                              <select name="month" class="form-select" required>
+                                  <option value="">Select Month</option>
+                                  @foreach(range(1,12) as $m)
+                                      <option value="{{ $m }}">
+                                          {{ \Carbon\Carbon::create()->month($m)->format('F') }}
+                                      </option>
+                                  @endforeach
+                              </select>
+                          </div>
+
+                          <!-- Year -->
+                          <div class="col-md-6">
+                              <label class="form-label">Year</label>
+                              <select name="year" class="form-select" required>
+                                  <option value="">Select Year</option>
+                                  @for($y = now()->year; $y >= now()->year - 10; $y--)
+                                      <option value="{{ $y }}">{{ $y }}</option>
+                                  @endfor
+                              </select>
+                          </div>
+
+                          <!-- SOH DOH Registration -->
+                          <div class="col-md-6">
+                              <label class="form-label">SOH DOH Registration Number</label>
+                              <input type="text"
+                                    name="soh_doh_registration"
+                                    class="form-control"
+                                    placeholder="Enter SOH DOH Registration #"
+                                    required>
+                          </div>
+
+                          <!-- COH Permit -->
+                          <div class="col-md-6">
+                              <label class="form-label">COH Permit #</label>
+                              <input type="text"
+                                    name="coh_permit"
+                                    class="form-control"
+                                    placeholder="Enter COH Permit #"
+                                    required>
+                          </div>
+
+                          <!-- Signed By -->
+                          <div class="col-md-6">
+                              <label class="form-label">Signed By</label>
+                              <input type="text"
+                                    name="signed_by"
+                                    class="form-control"
+                                    placeholder="Full Name"
+                                    required>
+                          </div>
+
+                          <!-- Title -->
+                          <div class="col-md-6">
+                              <label class="form-label">Title</label>
+                              <input type="text"
+                                    name="title"
+                                    class="form-control"
+                                    placeholder="Title / Position"
+                                    required>
+                          </div>
+
+                          <!-- Date -->
+                          <div class="col-md-6">
+                              <label class="form-label">Date</label>
+                              <input type="date"
+                                    name="signed_date"
+                                    class="form-control"
+                                    value="{{ now()->toDateString() }}"
+                                    required>
+                          </div>
+
+                      </div>
+                  </div>
+
+                  <!-- Modal Footer -->
+                  <div class="modal-footer bg-light">
+                      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                          Cancel
+                      </button>
+                      <button type="submit" class="btn btn-primary">
+                          Generate PDF Report
+                      </button>
+                  </div>
+
+              </form>
+
+          </div>
+      </div>
     </div>
 
         
