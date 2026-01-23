@@ -49692,3 +49692,51 @@ html[dir=rtl] body.dark-only .page-wrapper .page-body-wrapper .page-body .card:n
   5.9 Box-layout CSS Ends
 ==========================**/
 /*# sourceMappingURL=style.css.map */
+
+
+.action-bg {
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      padding: 50px 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+  }
+
+  .action-bg::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+  }
+
+  .action-btn {
+      padding: 18px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 50px;
+      min-width: 260px;
+      transition: all 0.3s ease;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+      border: none;
+  }
+
+  .waste-btn {
+      background: linear-gradient(135deg, #43e97b, #38f9d7);
+      color: #0f5132;
+  }
+
+  .report-btn {
+      background: linear-gradient(135deg, #fa709a, #fee140);
+      color: #842029;
+  }
+
+  .action-btn:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+      color: #000;
+  }

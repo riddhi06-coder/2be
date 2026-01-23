@@ -46,6 +46,23 @@
                                 <li class="breadcrumb-item active" aria-current="page">Disposal Details</li>
                             </ol>
                         </nav>
+
+
+                        <!-- Year Filter -->
+                        <form method="GET" action="{{ route('manage-disposal-details.index') }}">
+                            <select name="year"
+                                    class="form-select"
+                                    style="width: 160px;"
+                                    onchange="this.form.submit()">
+                                <option value="">All Years</option>
+                                @foreach($years as $year)
+                                    <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
+                                        {{ $year }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </form>
+                        
                     </div>
 
 

@@ -3,19 +3,18 @@
     
 <head>
     @include('components.backend.head')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.3.0/apexcharts.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.3.0/apexcharts.min.js"></script>
+
 </head>
 	   
 		@include('components.backend.header')
 
-	    <!--start sidebar wrapper-->	
-	    @include('components.backend.sidebar')
-	   <!--end sidebar wrapper-->
+	  <!--start sidebar wrapper-->	
+	  @include('components.backend.sidebar')
+	  <!--end sidebar wrapper-->
 
 
 
-       <div class="page-body"> 
+      <div class="page-body"> 
           <div class="container-fluid">            
             <div class="page-title"> 
               <div class="row">
@@ -141,11 +140,37 @@
              
             </div>
           </div>
+
+
+          <div class="container-fluid my-5">
+              <div class="row justify-content-center">
+                  <div class="col-lg-8">
+                      <div class="action-bg text-center">
+                          <h3 class="mb-4 fw-bold text-white">
+                              Quick Actions
+                          </h3>
+
+                          <div class="d-flex justify-content-center gap-4 flex-wrap">
+                              <a href="{{ route( 'frontend.log_waste_disposal' ) }}" class="btn action-btn waste-btn" target="__blank">
+                                  ♻ Log a Waste Disposal
+                              </a>
+
+                              <a href="#" class="btn action-btn report-btn">
+                                  📊 Generate Monthly Report
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
           <!-- Container-fluid Ends -->
-        </div>
+          </div>
         <!-- footer start-->
         @include('components.backend.footer')
       </div>
+      
     </div>
 
         

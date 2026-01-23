@@ -19,11 +19,27 @@ use App\Models\WasteDisposalDetails;
 class DisposalController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $disposals = WasteDisposalDetails::orderBy('id', 'desc')->get();
 
-        return view('backend.disposal.index', compact('disposals'));
+
+        $query = WasteDisposalDetails::query();
+
+        if ($request->filled('year')) {
+            $query->whereYear('date_of_pickup', $request->year);
+        }
+
+        $disposals = $query->orderBy('date_of_pickup', 'desc')->get();
+
+        // Years list for dropdown
+        $years = WasteDisposalDetails::selectRaw('YEAR(date_of_pickup) as year')
+                    ->distinct()
+                    ->orderBy('year', 'desc')
+                    ->pluck('year');
+
+
+        return view('backend.disposal.index', compact('disposals','years'));
     }
     
     public function create(Request $request)
