@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth:web', \App\Http\Middleware\PreventBackHisto
 
 // ==== Manage Disposal Details
 Route::get('manage-disposal-details/export', [DisposalController::class, 'export'])->name('manage-disposal-details.export');
+Route::post('manage-disposal-details/export-selected-pdf',[DisposalController::class, 'exportSelectedPdf'])->name('manage-disposal-details.exportSelectedPdf');
+
 Route::resource('manage-disposal-details', DisposalController::class);
 
 

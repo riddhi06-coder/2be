@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use ZipArchive;
+use PDF;
 
 use Carbon\Carbon;
 use App\Models\User;
@@ -114,6 +116,60 @@ class DisposalController extends Controller
 
             fclose($file);
         }, 200, $headers);
+    }
+
+    public function exportSelectedPdf(Request $request)
+    {
+        $ids = explode(',', $request->selected_ids);
+
+        $disposals = WasteDisposalDetails::whereIn('id', $ids)->get();
+
+        if ($disposals->isEmpty()) {
+            return back()->with('error', 'No records found');
+        }
+
+        // 🔹 If ONLY ONE record selected → download PDF directly
+        if ($disposals->count() === 1) {
+
+            $disposal = $disposals->first();
+
+            $pdf = PDF::loadView(
+                'backend.disposal.pdf',
+                compact('disposal')
+            );
+
+            $fileName = 'disposal_details_' . $disposal->generator_name . '.pdf';
+
+            return $pdf->download($fileName);
+        }
+
+        // 🔹 If MULTIPLE records → ZIP
+        $zipFileName = 'disposal_pdfs_' . time() . '.zip';
+        $zipPath = public_path('pdf/' . $zipFileName);
+
+        // Ensure directory exists
+        if (!file_exists(public_path('pdf'))) {
+            mkdir(public_path('pdf'), 0755, true);
+        }
+
+        $zip = new ZipArchive;
+        $zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+        foreach ($disposals as $disposal) {
+
+            $pdf = PDF::loadView(
+                'backend.disposal.pdf',
+                compact('disposal')
+            );
+
+            $pdfName = 'disposal_details_' . $disposal->generator_name . '.pdf';
+
+            $zip->addFromString($pdfName, $pdf->output());
+        }
+
+        $zip->close();
+
+        return response()->download($zipPath)->deleteFileAfterSend(true);
     }
 
 }

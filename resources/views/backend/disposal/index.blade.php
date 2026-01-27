@@ -61,10 +61,16 @@
                             </a>
 
                             <!-- Export PDF -->
-                            <a href="#"
-                            class="btn btn-sm btn-danger mb-3">
-                                Generate PDF
-                            </a>
+                            <form method="POST" action="{{ route('manage-disposal-details.exportSelectedPdf') }}" id="exportForm">
+                                @csrf
+
+                                <input type="hidden" name="selected_ids" id="selected_ids">
+
+                                <button type="submit" class="btn btn-sm btn-danger mb-3">
+                                    Generate PDF
+                                </button>
+                            </form>
+
 
                             <!-- Year Filter Card -->
                             <div class="card shadow-sm border-0">
@@ -100,6 +106,9 @@
                         
                             <thead>
                                 <tr>
+                                    <th>
+                                        <input type="checkbox" id="select-all">
+                                    </th>
                                     <th>#</th>
 
                                     <th>Date of Pickup</th>
@@ -112,6 +121,12 @@
                             <tbody>
                                 @foreach($disposals as $index => $disposal)
                                     <tr>
+                                        <td>
+                                            <input type="checkbox"
+                                                class="row-checkbox"
+                                                name="ids[]"
+                                                value="{{ $disposal->id }}">
+                                        </td>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ \Carbon\Carbon::parse($disposal->date_of_pickup)->format('d-m-Y') }}</td>
                                         <td>{{ $disposal->generator_name }}</td>
@@ -123,10 +138,11 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                            
+
                         </table>
 
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -137,8 +153,64 @@
              @include('components.backend.footer')
       </div>
     </div>
+    
 
         @include('components.backend.main-js')
+
+
+        <script>
+           document.getElementById('exportForm').addEventListener('submit', function (e) {
+                let ids = [];
+                document.querySelectorAll('.row-checkbox:checked').forEach(cb => ids.push(cb.value));
+
+                if (ids.length === 0) {
+                    e.preventDefault();
+                    alert('Please select at least one record');
+                    return;
+                }
+
+                document.getElementById('selected_ids').value = ids.join(',');
+
+                // Show loader
+                const loader = document.getElementById('pdfLoader');
+                loader.style.display = 'flex';
+
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+
+                // ✅ Reset UI after reasonable time
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    submitBtn.disabled = false;
+                    
+                }, 6000); // adjust based on PDF size
+            });
+
+            // Select All
+            document.getElementById('select-all').addEventListener('change', function () {
+                document.querySelectorAll('.row-checkbox').forEach(cb => {
+                    cb.checked = this.checked;
+                });
+            });
+        </script>
+
+        <div id="pdfLoader"
+            style="display:none;
+                    position:fixed;
+                    top:0;
+                    left:0;
+                    width:100%;
+                    height:100%;
+                    background:rgba(255,255,255,0.8);
+                    z-index:9999;
+                    align-items:center;
+                    justify-content:center;">
+
+            <div class="text-center">
+                <div class="spinner-border text-danger mb-3" role="status"></div>
+                <div class="fw-semibold">Generating PDF, please wait…</div>
+            </div>
+        </div>
 
 </body>
 
