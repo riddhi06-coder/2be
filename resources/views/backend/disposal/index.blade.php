@@ -51,32 +51,47 @@
                             </ol>
                         </nav>
 
-                        <!-- Year Filter Card (Right Side) -->
-                        <div class="card shadow-sm border-0">
-                            <div class="card-body d-flex align-items-center gap-2 py-2 px-3">
+                        <!-- Right Controls -->
+                        <div class="d-flex align-items-center gap-2">
 
-                                <span class="fw-semibold text-muted small">
-                                    Filter by Year
-                                </span>
+                            <!-- Export CSV -->
+                            <a href="{{ route('manage-disposal-details.export', ['year' => request('year')]) }}"
+                            class="btn btn-sm btn-success mb-3">
+                                Export
+                            </a>
 
-                                <form method="GET" action="{{ route('manage-disposal-details.index') }}">
-                                    <select name="year"
-                                            class="form-select form-select-sm"
-                                            style="width: 140px;"
-                                            onchange="this.form.submit()">
-                                        <option value="">All Years</option>
-                                        @foreach($years as $year)
-                                            <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
-                                                {{ $year }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </form>
+                            <!-- Export PDF -->
+                            <a href="#"
+                            class="btn btn-sm btn-danger mb-3">
+                                Generate PDF
+                            </a>
 
+                            <!-- Year Filter Card -->
+                            <div class="card shadow-sm border-0">
+                                <div class="card-body d-flex align-items-center gap-2 py-2 px-3">
+                                    <span class="fw-semibold text-muted small">Year</span>
+
+                                    <form method="GET" action="{{ route('manage-disposal-details.index') }}">
+                                        <select name="year"
+                                                class="form-select form-select-sm"
+                                                style="width: 140px;"
+                                                onchange="this.form.submit()">
+                                            <option value="">All</option>
+                                            @foreach($years as $year)
+                                                <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
+                                                    {{ $year }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </form>
+                                </div>
                             </div>
+
                         </div>
 
+
                     </div>
+
 
 
                     <div class="table-responsive custom-scrollbar">
@@ -90,7 +105,7 @@
                                     <th>Date of Pickup</th>
                                     <th>Generator Name</th>
                                     <th>Waste Type</th>
-                                    <th>Volume Pumped</th>
+                                    <th>Volume Pumped <br>(In Gallons)</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -103,11 +118,12 @@
                                         <td>{{ $disposal->waste_type }}</td>
                                         <td>{{ $disposal->volume_pumped }}</td>
                                         <td>
-                                            <a href="{{ route('manage-disposal-details.edit', $disposal->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="{{ route('manage-disposal-details.edit', $disposal->id) }}" class="btn btn-sm btn-primary">Details</a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
+                            
                         </table>
 
                     </div>

@@ -25,7 +25,7 @@
           </div>
 
 
-        <!-- Container-fluid starts -->
+          <!-- Container-fluid starts -->
           <div class="container-fluid">
             <div class="row"> 
               <div class="col-xl-3 col-sm-6">
@@ -293,15 +293,6 @@
         
     
     @include('components.backend.main-js')
-
-
-
-
-
-
-
-
-
 
         
 </body>
