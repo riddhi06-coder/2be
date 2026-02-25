@@ -43,6 +43,23 @@ class DisposalController extends Controller
                     ->pluck('year');
 
 
+        $query = WasteDisposalDetails::query();
+
+        if ($request->filled('year')) {
+            $query->whereYear('date_of_pickup', $request->year);
+        }
+
+        if ($request->filled('from_date')) {
+            $query->whereDate('date_of_pickup', '>=', $request->from_date);
+        }
+
+        if ($request->filled('to_date')) {
+            $query->whereDate('date_of_pickup', '<=', $request->to_date);
+        }
+
+        $disposals = $query->orderBy('date_of_pickup', 'desc')->get();
+
+
         return view('backend.disposal.index', compact('disposals','years'));
     }
     

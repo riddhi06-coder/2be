@@ -35,76 +35,103 @@
               <!-- Zero Configuration  Starts-->
               <div class="col-sm-12">
                 <div class="card">
-                  <div class="card-body">
-
-                    <div class="d-flex justify-content-between align-items-start mb-4">
+                    
+                    <div class="card-body">
+                        <!-- Top Controls -->
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
 
                         <!-- Breadcrumb -->
-                        <nav aria-label="breadcrumb" role="navigation">
+                        <nav aria-label="breadcrumb">
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
                                     <a href="{{ route('manage-disposal-details.index') }}">Home</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">
+                                <li class="breadcrumb-item active">
                                     Disposal Details
                                 </li>
                             </ol>
                         </nav>
 
                         <!-- Right Controls -->
-                        <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center flex-wrap gap-2 mt-3">
 
                             <!-- Export CSV -->
-                            <a href="{{ route('manage-disposal-details.export', ['year' => request('year')]) }}"
-                            class="btn btn-sm btn-success mb-3">
+                            <a href="{{ route('manage-disposal-details.export', request()->all()) }}"
+                            class="btn btn-sm btn-success">
                                 Export
                             </a>
 
                             <!-- Export PDF -->
-                            <form method="POST" action="{{ route('manage-disposal-details.exportSelectedPdf') }}" id="exportForm">
+                            <form method="POST"
+                                action="{{ route('manage-disposal-details.exportSelectedPdf') }}"
+                                id="exportForm"
+                                class="d-flex align-items-center">
                                 @csrf
-
                                 <input type="hidden" name="selected_ids" id="selected_ids">
-
-                                <button type="submit" class="btn btn-sm btn-danger mb-3">
+                                <button type="submit" class="btn btn-sm btn-danger">
                                     Generate PDF
                                 </button>
                             </form>
 
+                            <!-- Filter Form -->
+                            <form method="GET"
+                                action="{{ route('manage-disposal-details.index') }}"
+                                class="d-flex align-items-center gap-2">
 
-                            <!-- Hidden iframe -->
-                            <iframe name="downloadFrame" id="downloadFrame" style="display:none;"></iframe>
-
-
-                            <!-- Year Filter Card -->
-                            <div class="card shadow-sm border-0">
-                                <div class="card-body d-flex align-items-center gap-2 py-2 px-3">
-                                    <span class="fw-semibold text-muted small">Year</span>
-
-                                    <form method="GET" action="{{ route('manage-disposal-details.index') }}">
-                                        <select name="year"
-                                                class="form-select form-select-sm"
-                                                style="width: 140px;"
-                                                onchange="this.form.submit()">
-                                            <option value="">All</option>
-                                            @foreach($years as $year)
-                                                <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
-                                                    {{ $year }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </form>
+                                <!-- From Date -->
+                                <div class="d-flex flex-column">
+                                    <label class="small fw-semibold text-muted mb-1">From Date</label>
+                                    <input type="date"
+                                        name="from_date"
+                                        value="{{ request('from_date') }}"
+                                        class="form-control form-control-sm"
+                                        style="width:170px; margin-bottom: 20px;">
                                 </div>
-                            </div>
+
+                                <!-- To Date -->
+                                <div class="d-flex flex-column">
+                                    <label class="small fw-semibold text-muted mb-1">To Date</label>
+                                    <input type="date"
+                                        name="to_date"
+                                        value="{{ request('to_date') }}"
+                                        class="form-control form-control-sm"
+                                        style="width:170px; margin-bottom: 20px;">
+                                </div>
+
+                                <!-- Year -->
+                                <div class="d-flex flex-column">
+                                    <label class="small fw-semibold text-muted mb-1">Year</label>
+                                    <select name="year"
+                                            class="form-select form-select-sm"
+                                            style="width:130px; margin-bottom: 20px;">
+                                        <option value="">All</option>
+                                        @foreach($years as $year)
+                                            <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
+                                                {{ $year }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <!-- Filter Button -->
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    Filter
+                                </button>
+
+                                <!-- Reset -->
+                                <a href="{{ route('manage-disposal-details.index') }}"
+                                class="btn btn-sm btn-secondary">
+                                    Reset
+                                </a>
+
+                            </form>
 
                         </div>
-
-
                     </div>
 
 
-
-                    <div class="table-responsive custom-scrollbar">
+                    <div class="table-responsive custom-scrollbar mt-5">
                     
                         <table class="display" id="basic-1">
                         
