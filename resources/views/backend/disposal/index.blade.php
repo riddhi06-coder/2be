@@ -72,6 +72,10 @@
                             </form>
 
 
+                            <!-- Hidden iframe -->
+                            <iframe name="downloadFrame" id="downloadFrame" style="display:none;"></iframe>
+
+
                             <!-- Year Filter Card -->
                             <div class="card shadow-sm border-0">
                                 <div class="card-body d-flex align-items-center gap-2 py-2 px-3">
@@ -183,7 +187,10 @@
                     loader.style.display = 'none';
                     submitBtn.disabled = false;
                     
-                }, 6000); // adjust based on PDF size
+                    // ✅ Reload page after download time
+                    window.location.reload();
+
+                }, 8000); // adjust based on PDF size
             });
 
             // Select All

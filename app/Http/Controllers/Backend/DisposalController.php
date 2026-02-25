@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\Cookie;
 use ZipArchive;
 use PDF;
 
@@ -127,6 +128,7 @@ class DisposalController extends Controller
         if ($disposals->isEmpty()) {
             return back()->with('error', 'No records found');
         }
+
 
         // 🔹 If ONLY ONE record selected → download PDF directly
         if ($disposals->count() === 1) {
