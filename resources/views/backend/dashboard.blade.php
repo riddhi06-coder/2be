@@ -4,6 +4,93 @@
 <head>
     @include('components.backend.head')
 
+      <style>
+        body {
+            background: #f4f6f9;
+        }
+
+        .qa-card {
+            background: #bfaeae;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+        }
+
+        .qa-header h4 {
+            font-weight: 600;
+        }
+
+        .qa-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .qa-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 22px;
+            border-radius: 14px;
+            background: #f9fafb;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+        }
+
+        .qa-item:hover {
+            background: #ffffff;
+            border-color: #e5e7eb;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .qa-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .qa-icon.green {
+            background: #16a34a;
+        }
+
+        .qa-icon.blue {
+            background: #2563eb;
+        }
+
+        .qa-content {
+            flex-grow: 1;
+        }
+
+        .qa-title {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .qa-sub {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .qa-arrow {
+            font-size: 18px;
+            color: #9ca3af;
+            transition: transform 0.2s ease;
+        }
+
+        .qa-item:hover .qa-arrow {
+            transform: translateX(5px);
+        }
+
+      </style>
+
 </head>
 	   
 		@include('components.backend.header')
@@ -25,149 +112,66 @@
           </div>
 
 
-          <!-- Container-fluid starts -->
-          <div class="container-fluid">
-            <div class="row"> 
-              <div class="col-xl-3 col-sm-6">
-                    <div class="card o-hidden small-widget">
-                      <div class="card-body total-project border-b-primary border-2"><span class="f-light f-w-500 f-14">Total Project</span>
-                        <div class="project-details"> 
-                          <div class="project-counter"> 
-                            <h2 class="f-w-600">1,523</h2><span class="f-12 f-w-400">(This month)</span>
-                          </div>
-                          <div class="product-sub bg-primary-light">
-                            <svg class="invoice-icon">
-                              <use href="{{ asset('admin/assets/svg/icon-sprite.svg#color-swatch') }}"></use>
-                            </svg>
-                          </div>
-                        </div>
-                        <ul class="bubbles">
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="col-xl-3 col-sm-6">
-                    <div class="card o-hidden small-widget">
-                      <div class="card-body total-Progress border-b-warning border-2"> <span class="f-light f-w-500 f-14">In Progress</span>
-                        <div class="project-details">
-                          <div class="project-counter">
-                            <h2 class="f-w-600">836</h2><span class="f-12 f-w-400">(This month) </span>
-                          </div>
-                          <div class="product-sub bg-warning-light"> 
-                            <svg class="invoice-icon">
-                              <use href="{{ asset('admin/assets/svg/icon-sprite.svg#tick-circle') }}"></use>
-                            </svg>
-                          </div>
-                        </div>
-                        <ul class="bubbles">
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-3 col-sm-6">
-                    <div class="card o-hidden small-widget">
-                      <div class="card-body total-Complete border-b-secondary border-2"><span class="f-light f-w-500 f-14">Complete</span>
-                        <div class="project-details">
-                          <div class="project-counter">
-                            <h2 class="f-w-600">475</h2><span class="f-12 f-w-400">(This month) </span>
-                          </div>
-                          <div class="product-sub bg-secondary-light"> 
-                            <svg class="invoice-icon">
-                              <use href="{{ asset('admin/assets/svg/icon-sprite.svg#add-square') }}"></use>
-                            </svg>
-                          </div>
-                        </div>
-                        <ul class="bubbles"> 
-                          <li class="bubble"> </li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"> </li>
-                          <li class="bubble"></li>
-                          <li class="bubble"> </li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"> </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-3 col-sm-6">
-                    <div class="card o-hidden small-widget">
-                      <div class="card-body total-upcoming"><span class="f-light f-w-500 f-14">Upcoming</span>
-                        <div class="project-details"> 
-                          <div class="project-counter">
-                            <h2 class="f-w-600">189</h2><span class="f-12 f-w-400">(This month) </span>
-                          </div>
-                          <div class="product-sub bg-light-light"> 
-                            <svg class="invoice-icon">
-                              <use href="{{ asset('admin/assets/svg/icon-sprite.svg#edit-2') }}"></use>
-                            </svg>
-                          </div>
-                        </div>
-                        <ul class="bubbles"> 
-                          <li class="bubble"> </li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                          <li class="bubble"></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-             
-            </div>
-          </div>
-
-
-          <div class="container-fluid my-5">
+          <div class="container py-5">
               <div class="row justify-content-center">
-                  <div class="col-lg-8">
-                      <div class="action-bg text-center">
-                          <h3 class="mb-4 fw-bold text-white">
-                              Quick Actions
-                          </h3>
+                  <div class="col-lg-6">
 
-                          <div class="d-flex justify-content-center gap-4 flex-wrap">
-                              <a href="{{ route( 'frontend.log_waste_disposal' ) }}" class="btn action-btn waste-btn" target="__blank">
-                                  ♻ Log a Waste Disposal
+                      <div class="qa-card">
+
+                          <div class="qa-header text-center mb-4">
+                              <h4>Quick Actions</h4>
+                              <p class="text-muted mb-0">Manage waste records and reports</p>
+                          </div>
+
+                          <div class="qa-actions">
+
+                              <a href="{{ route('frontend.log_waste_disposal') }}"
+                                target="_blank"
+                                class="qa-item">
+
+                                  <div class="qa-icon green">
+                                      ♻
+                                  </div>
+
+                                  <div class="qa-content">
+                                      <div class="qa-title">Log Waste Disposal</div>
+                                      <div class="qa-sub">Add a new waste collection record</div>
+                                  </div>
+
+                                  <div class="qa-arrow">
+                                      →
+                                  </div>
+
                               </a>
 
                               <a href="#"
-                                class="btn action-btn report-btn"
                                 data-bs-toggle="modal"
-                                data-bs-target="#monthlyReportModal">
-                                  📊 Generate Monthly Report
+                                data-bs-target="#monthlyReportModal"
+                                class="qa-item">
+
+                                  <div class="qa-icon blue">
+                                      📊
+                                  </div>
+
+                                  <div class="qa-content">
+                                      <div class="qa-title">Generate Monthly Report</div>
+                                      <div class="qa-sub">Download disposal summary</div>
+                                  </div>
+
+                                  <div class="qa-arrow">
+                                      →
+                                  </div>
+
                               </a>
 
                           </div>
+
                       </div>
+
                   </div>
               </div>
           </div>
-
 
           <!-- Container-fluid Ends -->
           </div>
