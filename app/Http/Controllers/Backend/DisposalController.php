@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Support\Facades\Cookie;
@@ -189,6 +190,59 @@ class DisposalController extends Controller
         $zip->close();
 
         return response()->download($zipPath)->deleteFileAfterSend(true);
+    }
+
+    public function generate_monthly_report(Request $request)
+    {
+        // ✅ Strict Validation
+        $request->validate([
+            'month' => 'required|integer|min:1|max:12',
+            'year' => 'required|integer|min:2000|max:' . date('Y'),
+            'soh_doh_registration' => 'required|string',
+            'coh_permit' => 'required|string',
+            'signed_by' => 'required|string',
+            'title' => 'required|string',
+            'signed_date' => 'required|date',
+        ]);
+
+        // ✅ Convert to integer (IMPORTANT for Carbon)
+        $month = (int) $request->month;
+        $year  = (int) $request->year;
+
+        // ✅ Fetch records based on month & year
+        $records = DB::table('waste_disposal_details')
+            ->whereMonth('date_of_pickup', $month)
+            ->whereYear('date_of_pickup', $year)
+            ->orderBy('date_of_pickup', 'asc')
+            ->get();
+
+        // ✅ Optional: Stop if no records found
+        if ($records->isEmpty()) {
+            return back()->with('error', 'No records found for selected month.');
+        }
+
+        // ✅ Safe month name generation (FIXED Carbon issue)
+        $monthName = Carbon::createFromDate($year, $month, 1)->format('F');
+
+        $data = [
+            'records' => $records,
+            'month_name' => $monthName,
+            'year' => $year,
+            'soh_doh_registration' => $request->soh_doh_registration,
+            'coh_permit' => $request->coh_permit,
+            'signed_by' => $request->signed_by,
+            'title' => $request->title,
+            'signed_date' => Carbon::parse($request->signed_date)->format('m/d/Y'),
+        ];
+
+        // ✅ Generate PDF
+        $pdf = Pdf::loadView('backend.disposal.generate_monthly_report', $data)
+            ->setPaper('a4', 'landscape');
+
+        // ✅ Clean filename
+        $fileName = 'monthly_report_' . strtolower($monthName) . '_' . $year . '.pdf';
+
+        return $pdf->download($fileName);
     }
 
 }

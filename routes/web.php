@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth:web', \App\Http\Middleware\PreventBackHisto
 Route::get('manage-disposal-details/export', [DisposalController::class, 'export'])->name('manage-disposal-details.export');
 Route::post('manage-disposal-details/export-selected-pdf',[DisposalController::class, 'exportSelectedPdf'])->name('manage-disposal-details.exportSelectedPdf');
 
+Route::post('/generate-monthly-report', [DisposalController::class, 'generate_monthly_report'])->name('generate.monthly.report');
 Route::resource('manage-disposal-details', DisposalController::class);
 
 

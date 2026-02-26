@@ -191,7 +191,7 @@
               </div>
 
               <!-- Modal Body -->
-              <form method="POST" action="#">
+              <form method="POST" action="{{ route('generate.monthly.report') }}">
                   @csrf
 
                   <div class="modal-body">
