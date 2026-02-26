@@ -25,7 +25,8 @@ class EmailSettingsController extends Controller
 
     public function index(Request $request)
     {
-        return view('backend.email.index');
+        $emails = EmailSettingsDetails::orderBy('id', 'asc')->wherenull('deleted_by')->get();
+        return view('backend.email.index', compact('emails'));
     }
     
     public function create(Request $request)
@@ -63,5 +64,51 @@ class EmailSettingsController extends Controller
 
         return redirect()->route('manage-email-settings.index')->with('message', 'Email settings saved successfully.');
     }
+
+    public function edit($id)
+    {
+        $email = EmailSettingsDetails::findOrFail($id);
+        return view('backend.email.edit', compact('email'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'default_email' => 'required|email|max:255',
+            'email1'        => 'required|email|max:255',
+            'email2'        => 'nullable|email|max:255',
+            'email3'        => 'nullable|email|max:255',
+        ]);
+
+        $email = EmailSettingsDetails::findOrFail($id);
+
+        $email->update([
+            'default_email' => $request->default_email,
+            'email1'        => $request->email1,
+            'email2'        => $request->email2,
+            'email3'        => $request->email3,
+            'modified_at'    => Carbon::now(),
+            'modified_by'    => Auth::id(),
+        ]);
+
+        return redirect()
+            ->route('manage-email-settings.index')
+            ->with('message', 'Email settings updated successfully.');
+    }
+
+    public function destroy(string $id)
+    {
+        $data['deleted_by'] =  Auth::user()->id;
+        $data['deleted_at'] =  Carbon::now();
+        try {
+            $industries = EmailSettingsDetails::findOrFail($id);
+            $industries->update($data);
+
+            return redirect()->route('manage-email-settings.index')->with('message', 'Details deleted successfully!');
+        } catch (Exception $ex) {
+            return redirect()->back()->with('error', 'Something Went Wrong - ' . $ex->getMessage());
+        }
+    }
+    
 
 }

@@ -63,18 +63,44 @@
                         
                             <thead>
                                 <tr>
-                                    <th>
-                                        <input type="checkbox" id="select-all">
-                                    </th>
                                     <th>#</th>
-
                                     <th>Default Email</th>
-                                    <th>Admin Email</th>
+                                    <th>Email 1</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                @forelse($emails as $key => $email)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $email->default_email }}</td>
+                                            <td>{{ $email->email1 }}</td>
+                                            <td>
+                                                <a href="{{ route('manage-email-settings.edit', $email->id) }}" 
+                                                class="btn btn-sm btn-primary">
+                                                    Edit
+                                                </a>
+
+                                                <form action="{{ route('manage-email-settings.destroy', $email->id) }}" 
+                                                    method="POST" 
+                                                    style="display:inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" 
+                                                            class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Are you sure?')">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted">
+                                                No email settings found.
+                                            </td>
+                                        </tr>
+                                    @endforelse
                             </tbody>
 
                         </table>
