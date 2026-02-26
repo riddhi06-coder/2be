@@ -191,35 +191,50 @@
               </div>
 
               <!-- Modal Body -->
-              <form method="POST" action="{{ route('generate.monthly.report') }}">
+              <form method="POST" action="{{ route('generate.monthly.report') }}" id="monthlyReportForm">
                   @csrf
 
                   <div class="modal-body">
                       <div class="row g-3">
 
-                          <!-- Month -->
-                          <div class="col-md-6">
-                              <label class="form-label">Month</label>
-                              <select name="month" class="form-select" required>
-                                  <option value="">Select Month</option>
-                                  @foreach(range(1,12) as $m)
-                                      <option value="{{ $m }}">
-                                          {{ \Carbon\Carbon::create()->month($m)->format('F') }}
-                                      </option>
-                                  @endforeach
-                              </select>
-                          </div>
+
+                          @php
+                              $availableMonths = DB::table('waste_disposal_details')
+                                  ->selectRaw('YEAR(date_of_pickup) as year, MONTH(date_of_pickup) as month')
+                                  ->groupBy('year', 'month')
+                                  ->orderBy('year', 'desc')
+                                  ->orderBy('month', 'desc')
+                                  ->get();
+                          @endphp
 
                           <!-- Year -->
                           <div class="col-md-6">
                               <label class="form-label">Year</label>
-                              <select name="year" class="form-select" required>
+                              <select name="year" id="yearSelect" class="form-select" required>
                                   <option value="">Select Year</option>
-                                  @for($y = now()->year; $y >= now()->year - 10; $y--)
-                                      <option value="{{ $y }}">{{ $y }}</option>
-                                  @endfor
+
+                                  @foreach($availableMonths->pluck('year')->unique() as $year)
+                                      <option value="{{ $year }}">{{ $year }}</option>
+                                  @endforeach
+
                               </select>
                           </div>
+
+                          <!-- Month -->
+                          <div class="col-md-6">
+                            <label class="form-label">Month</label>
+                            <select name="month" id="monthSelect" class="form-select" required disabled>
+                                <option value="">Select Month</option>
+
+                                @foreach($availableMonths as $item)
+                                    <option value="{{ $item->month }}"
+                                            data-year="{{ $item->year }}">
+                                        {{ \Carbon\Carbon::createFromDate($item->year, $item->month, 1)->format('F') }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </div>
 
                           <!-- SOH DOH Registration -->
                           <div class="col-md-6">
@@ -279,7 +294,7 @@
                       <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                           Cancel
                       </button>
-                      <button type="submit" class="btn btn-primary">
+                      <button type="submit" class="btn btn-primary" id="generateBtn">
                           Generate PDF Report
                       </button>
                   </div>
@@ -293,6 +308,50 @@
         
     
     @include('components.backend.main-js')
+
+    <!---- SUbmit button validations---->
+    <script>
+      document.getElementById('monthlyReportForm').addEventListener('submit', function () {
+
+          let btn = document.getElementById('generateBtn');
+
+          btn.disabled = true;
+          btn.innerHTML = 'Generating...';
+
+          // Reload page after 3 seconds
+          setTimeout(function () {
+              window.location.reload();
+          }, 3000);
+
+      });
+    </script>
+
+    
+    <!---- Dynamic month fetching as per the year---->
+    <script>
+      document.getElementById('yearSelect').addEventListener('change', function () {
+
+          let selectedYear = this.value;
+          let monthSelect = document.getElementById('monthSelect');
+          let options = monthSelect.querySelectorAll('option');
+
+          monthSelect.value = "";
+          monthSelect.disabled = true;
+
+          options.forEach(function(option) {
+
+              if (option.value === "") return;
+
+              if (option.getAttribute('data-year') === selectedYear) {
+                  option.style.display = "block";
+                  monthSelect.disabled = false;
+              } else {
+                  option.style.display = "none";
+              }
+          });
+
+      });
+    </script>
 
         
 </body>
