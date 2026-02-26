@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\Backend\DisposalController;
+use App\Http\Controllers\Backend\EmailSettingsController;
 
 use App\Http\Controllers\Frontend\HomeController;
 
@@ -34,6 +35,9 @@ Route::post('manage-disposal-details/export-selected-pdf',[DisposalController::c
 
 Route::post('/generate-monthly-report', [DisposalController::class, 'generate_monthly_report'])->name('generate.monthly.report');
 Route::resource('manage-disposal-details', DisposalController::class);
+
+
+Route::resource('manage-email-settings', EmailSettingsController::class);
 
 
 

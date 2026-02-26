@@ -46,6 +46,20 @@
                 </li>
 
 
+                <li class="sidebar-list {{ request()->routeIs('manage-email-settings.index') ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"></i>
+                  <a class="sidebar-link" href="{{ route('manage-email-settings.index') }}">
+                    <svg class="stroke-icon"> 
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#doller-return') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#doller-return') }}"></use>
+                    </svg>
+                    <span>Email Setting</span>
+                  </a>
+                </li>
+
+
                
               </ul>
               <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
