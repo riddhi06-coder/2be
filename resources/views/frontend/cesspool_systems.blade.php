@@ -56,8 +56,8 @@
                             <label class="label-full">Type of Inspection</label>
                             <div class="center-field">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="home_inspector" value="Home Inspector" checked>
-                                <label class="form-check-label" for="home_inspector">Home Inspector</label>
+                                <input class="form-check-input" type="checkbox" id="home_inspection" value="Home Inspector" checked>
+                                <label class="form-check-label" for="home_inspection">Home Inspection</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="realtor" value="Realtor">
@@ -222,10 +222,7 @@
                                 <input class="form-check-input" type="checkbox" id="past_failure">
                                 <label class="form-check-label" for="past_failure">Evidence of past failure</label>
                                 </div>
-                                <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="other_problem">
-                                <label class="form-check-label" for="other_problem">Other problems (see diagram)</label>
-                                </div>
+                              
                             </div>
                             </div>
                         </div>
@@ -245,7 +242,7 @@
                             </div>
                             <div class="form-group col-md-12">
                             <div class="form-checkbox-group">
-                                <label>Accessible :</label>
+                                <label>Accessible Lids :</label>
                                 <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="access_yes">
                                 <label class="form-check-label" for="access_yes">Yes</label>
@@ -266,7 +263,7 @@
                                 </div>
                                 <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="accesslid_no">
-                                <label class="form-check-label" for="accesslid_no">N/D</label>
+                                <label class="form-check-label" for="accesslid_no">No</label>
                                 </div>
                             </div>
                             </div>
@@ -330,41 +327,9 @@
                             </small>
                             </div>
 
-                            <div class="form-group col-md-12">
-                            <small>N/A = Not Applicable &nbsp;&nbsp;&nbsp; N/D = Not Determined</small>
-                            </div>
-                        
                         </div>
                         </div>
-                        <div class="graph-box">
-                        <div class="form-group col-md-12 text-center">
-                            <label class="sketch-title">
-                            SKETCH SYSTEM LAYOUT IF PERMIT SKETCH NOT AVAILABLE<br>
-                            (INCLUDE HOUSE, OUT BUILDINGS & OTHER PERTINENT FEATURES)
-                            </label>
-                        </div>
-                        <div class="form-group col-md-12 d-flex justify-content-center">
-                            <div class="sketch-grid"></div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label class="key-title">KEY</label>
-                            <div class="key-row">
-                            <span class="key-label">Building :</span>
-                            <div class="box"></div>
-                            </div>
-                            <div class="key-row">
-                            <span class="key-label">Drainfield :</span>
-                            <span>----- DF -----</span>
-                            </div>
-                            <div class="key-row">
-                            <span class="key-label">Septic tank :</span>
-                            <span>ST</span>
-                            </div>
-                            <div class="key-row">
-                            <span class="key-label">Well :</span>
-                            <span>W</span>
-                            </div>
-                        </div>
+
                         <div class="form-group col-md-12">
                             <label>Notes : </label>
                             <textarea class="form-control"></textarea>
