@@ -40,7 +40,7 @@
 
                     <tr>
                         <td align="center" style="padding:30px 0;">
-                            <a href="{{ route('admin.dashboard') }}"
+                            <a href="{{ route('admin.login') }}"
                                style="background-color:#0d6efd;
                                       color:#ffffff;
                                       padding:12px 25px;

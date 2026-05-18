@@ -20,11 +20,10 @@ class Kernel extends ConsoleKernel
         | The command itself checks if today is the last day of the month.
         */
 
-        $schedule->command('email:monthly-report-reminder')
-                 ->dailyAt('09:00')
-                 ->withoutOverlapping()
-                 ->onOneServer();
-    }
+        // $schedule->command('email:monthly-report-reminder')
+        //          ->everyminute();
+        
+        }
 
     /**
      * Register the commands for the application.

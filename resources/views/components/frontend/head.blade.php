@@ -1,4 +1,4 @@
-<title>2BE Pumping Log</title>
+  <title>2BE Pumping Log</title>
   <meta charset="utf-8">
   <link rel="icon" type="image/png" href="{{ asset('frontend/assets/images/favicon.ico') }}" sizes="32x32" />
   <meta name="viewport" content="width=device-width, initial-scale=1">

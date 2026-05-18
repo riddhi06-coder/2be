@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\DisposalController;
 use App\Http\Controllers\Backend\EmailSettingsController;
 
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\CesspoolController;
 
 // =========================================================================== Backend Routes
 
@@ -51,5 +52,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     Route::get('/log-waste-disposal', [HomeController::class, 'log_waste_disposal'])->name('frontend.log_waste_disposal');
     Route::get('/thank-you', [HomeController::class, 'thank_you'])->name('frontend.thank_you');
     Route::post('/waste-entry', [HomeController::class, 'store_waste_entry'])->name('waste.store');
+
+
+    Route::get('/cesspool-systems', [CesspoolController::class, 'cesspool_systems'])->name('frontend.cesspool_systems');
 
 });

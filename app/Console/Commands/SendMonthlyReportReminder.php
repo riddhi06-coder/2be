@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MonthlyReportReminderMail;
 use App\Models\EmailSettingsDetails;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 
 class SendMonthlyReportReminder extends Command
@@ -32,38 +33,55 @@ class SendMonthlyReportReminder extends Command
 
     public function handle()
     {
-        $today = Carbon::now();
-
-        // Only last day of month
-        if (!$today->isLastOfMonth()) {
-            return;
+        // Get Hawaii time explicitly
+        $today = Carbon::now('Pacific/Honolulu');
+    
+        Log::info('CRON HIT AT (Server Time): ' . now());
+        Log::info('CRON HIT AT (Hawaii Time): ' . $today);
+        Log::info('MonthlyReportReminder command started.');
+    
+        try {
+    
+            Log::info('Current Hawaii time: ' . $today);
+    
+    
+            Log::info('Fetching email settings...');
+            $emailSetting = EmailSettingsDetails::wherenull('deleted_by')->first();
+    
+            if (!$emailSetting) {
+                Log::error('No email settings found in DB.');
+                return;
+            }
+    
+            Log::info('Email settings fetched successfully.');
+    
+            $emails = collect([
+                $emailSetting->default_email,
+                $emailSetting->email1,
+                $emailSetting->email2,
+                $emailSetting->email3,
+            ])->filter()->toArray();
+    
+            Log::info('Emails to send:', $emails);
+    
+            if (empty($emails)) {
+                Log::error('No valid email addresses found.');
+                return;
+            }
+    
+            Log::info('Sending mail...');
+    
+            Mail::to($emails)->send(new \App\Mail\MonthlyReportReminderMail());
+    
+            Log::info('Mail sent successfully.');
+    
+        } catch (\Exception $e) {
+    
+            Log::error('Error while sending monthly reminder: ' . $e->getMessage());
+            Log::error('File: ' . $e->getFile());
+            Log::error('Line: ' . $e->getLine());
         }
-
-        // Only send at 09:00
-        if ($today->format('H:i') !== '09:00') {
-            return;
-        }
-
-        // Fetch email from DB
-        $emailSetting = EmailSettingsDetails::wherenull('deleted_by')->first();
-
-        if (!$emailSetting) {
-            $this->error('No email settings found.');
-            return;
-        }
-
-        // dd($emailSetting);
-
-        $emails = collect([
-            $emailSetting->default_email,
-            $emailSetting->email1,
-            $emailSetting->email2,
-            $emailSetting->email3,
-        ])->filter()->toArray();
-
-        Mail::to($emails)
-            ->send(new \App\Mail\MonthlyReportReminderMail());
-
-        $this->info('Monthly report reminder sent successfully.');
+    
+        Log::info('MonthlyReportReminder command ended.');
     }
 }
