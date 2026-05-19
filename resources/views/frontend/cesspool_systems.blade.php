@@ -13,13 +13,13 @@
 
     <section class="header-wrap second-header">
         <div class="container-fluid text-center">
-        <div class="header-img-box">
-            <a href="{{ route( 'frontend.index' ) }}"><img src="{{ asset('frontend/assets/images/logo.webp') }}" class="img-responsive"></a>
-            <h1>Cesspool Systems</h1>
-        </div>
-        <div class="header-back">
-            <a href="{{ route( 'frontend.index' ) }}" class="btn"><i class="fa fa-long-arrow-left"></i> <span>Back to Home</span></a>
-        </div>
+            <div class="header-img-box">
+                <a href="{{ route( 'frontend.index' ) }}"><img src="{{ asset('frontend/assets/images/logo.webp') }}" class="img-responsive"></a>
+                <h1>Cesspool Systems</h1>
+            </div>
+            <div class="header-back">
+                <a href="{{ route( 'frontend.index' ) }}" class="btn"><i class="fa fa-long-arrow-left"></i> <span>Back to Home</span></a>
+            </div>
         </div>
     </section>
 

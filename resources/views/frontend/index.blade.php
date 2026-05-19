@@ -51,7 +51,7 @@
                         <img src="{{ asset('frontend/assets/images/icon2.svg') }}">
                         <div class="inspection-text">
                             <h3>Septic Systems</h3>
-                            <a href="septic-systems.html" class="btn">Open Form <i class="fa fa-long-arrow-right"></i></a>
+                            <a href="{{ route('frontend.septic_systems') }}" class="btn">Open Form <i class="fa fa-long-arrow-right"></i></a>
                         </div>
                         </div>
                     </div>

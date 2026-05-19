@@ -8,6 +8,8 @@ use App\Http\Controllers\Backend\EmailSettingsController;
 
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CesspoolController;
+use App\Http\Controllers\Frontend\SepticController;
+
 
 // =========================================================================== Backend Routes
 
@@ -55,5 +57,6 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
 
 
     Route::get('/cesspool-systems', [CesspoolController::class, 'cesspool_systems'])->name('frontend.cesspool_systems');
+    Route::get('/septic-systems', [SepticController::class, 'septic_systems'])->name('frontend.septic_systems');
 
 });
