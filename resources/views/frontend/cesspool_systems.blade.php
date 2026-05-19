@@ -29,14 +29,14 @@
             <div class="col-md-12">
             <div class="systems-form-box">
                 <div class="stepper text-center mb-4">
-                <div class="steps">
-                    <span class="step active">Basic Information</span>
-                    <span class="step">Site Observations</span>
-                    <span class="step">System Evaluation</span>
-                </div> 
-                <div class="progress-container">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
+                    <div class="steps">
+                        <span class="step active">Basic Information</span>
+                        <span class="step">Site Observations</span>
+                        <span class="step">System Evaluation</span>
+                    </div> 
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
                 </div>
 
 
@@ -334,6 +334,34 @@
                             <label>Notes : </label>
                             <textarea class="form-control"></textarea>
                         </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Inspector Signature:</label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label><strong>Print Name:</strong></label>
+                                <textarea class="form-control"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <label>Date</label>
+                            <div class="input-group">
+                            <input type="text"
+                                    id="date"
+                                    class="form-control"
+                                    placeholder="MM/DD/YYYY"
+                                    >
+                            <span class="input-group-text custom-icon" id="calendar-icon-date">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            </div>
+                        </div>
+
                         </div>
                     </div>
 
@@ -405,6 +433,7 @@
         showStep(currentStep);
     </script>
 
+    <!-----date picker js for the date columns--->
     <script>
         flatpickr("#date_of_pickup", {
             dateFormat: "m/d/Y",
@@ -412,9 +441,20 @@
             disableMobile: true
         });
         
-        document.getElementById('calendar-icon').addEventListener('click', function () {
+        document.getElementById('calendar-icon-pickup').addEventListener('click', function () {
             document.getElementById('date_of_pickup')._flatpickr.open();
         });
+
+        flatpickr("#date", {
+            dateFormat: "m/d/Y",
+            allowInput: true,
+            disableMobile: true
+        });
+
+        document.getElementById('calendar-icon-date').addEventListener('click', function () {
+            document.getElementById('date')._flatpickr.open();
+        });
+
     </script>
     
     <script>
